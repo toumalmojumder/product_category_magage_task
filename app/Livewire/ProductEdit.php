@@ -39,23 +39,27 @@ class ProductEdit extends Component
         $product = Product::findOrFail($this->id);
         if($this->banner){
             try {
-                unlink(storage_path('app/public/' . $this->oldBanner));                         
-                $validated['banner'] = $this->banner->store('banner','public');
+                unlink(storage_path('app/public/' . $this->oldImage));                         
+                $validated['image'] = $this->image->store('image','public');
                 } catch (\Exception $e) {             
-                     $validated['banner'] = $this->banner->store('banner','public');
+                     $validated['image'] = $this->image->store('image','public');
                 }
             }else{
-                $validated['banner'] = $this->oldBanner;
+                $validated['image'] = $this->oldImage;
             }
-        $Banner->update($validated);
+        $product->update([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'image' => $validated['image'],
+        ]);
         $this->id='';
-        $this->oldBanner = $validated['banner'];
-        session()->flash('banner_index', 'Banner updated successfully.');
+        $this->oldImage = $validated['image'];
+        session()->flash('product_index', 'Product updated successfully.');
         $notification = array(
-            'message' => 'Banner updated successfully.',
+            'message' => 'Product updated successfully.',
             'alert-type' => 'success'
         );
-        return redirect()->route('banner.index')->with($notification);
+        return redirect()->route('welcome')->with($notification);
         
 }
 
