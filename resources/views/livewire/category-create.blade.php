@@ -15,7 +15,7 @@
                     <div class="col-span-1 sm:col-span-1">
                         <label for="name" class="block text-sm font-medium text-gray-700 text-left">Name:<span
                                 class="text-red-500">*</span></label>
-                        <input wire:model.blur="name" type="text" id="name" name="name" placeholder="category Name English"
+                        <input wire:model.blur="name" type="text" id="name" name="name" placeholder="category Name"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                         <div class="text-red-500">
                             @error('name')

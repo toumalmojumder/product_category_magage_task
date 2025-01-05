@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <title>Laravel</title>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Fonts -->
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Styles -->
+        @livewireStyles
+        <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
@@ -826,76 +835,11 @@
     </style>
     @vite('resources/css/app.css')
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="antialiased">
-    <header class="bg-blue-600 text-white">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div class="text-lg font-bold">My Website</div>
-          <nav class="hidden md:flex space-x-4">
-            <a x-data @click="$dispatch('open-modal',{name:'category'})" class="hover:text-blue-300">Create Category</a>
-            <a x-data @click="$dispatch('open-modal',{name:'product'})" class="hover:text-blue-300">Create Product</a>
-            
-          </nav>
-          <button class="md:hidden flex items-center bg-blue-500 p-2 rounded">
-            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-          </button>
+    </head>
+    <body>
+        <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
+            {{ $slot }}
         </div>
-      </header>
-      <main class="container mx-auto px-4 py-8">
-        
-        <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-1 h-[100vh]">
-          <div class="bg-white rounded shadow p-4 w-full ">
-            <h6>Categories:</h6>
-            @livewire('category_index')
-          </div>
-          <br>
-          <div class="bg-white rounded shadow p-4 w-full ">
-            <h6>Product:</h6>
-            @livewire('category_index')
-        </div>
-          
-        </div>
-      </main>
-      <footer class="bg-blue-600 text-white">
-        <div class="container mx-auto px-4 py-4 text-center">
-          <p>&copy; 2025 My Website. All Rights Reserved.</p>
-          <div class="space-x-4 mt-2">
-            <a href="https://policies.google.com/privacy?hl=en-US" class="hover:text-blue-300">Privacy Policy</a>
-            <a href="https://policies.google.com/terms?hl=en-US" class="hover:text-blue-300">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
-      <x-custom-modal name="category" title="Add a New category">
-        <div>
-            <x-slot:body>
-        </div>
-        <section class="bg-white dark:bg-gray-900">
-            <div class="py-1 lg:py-1 px-4 mx-auto max-w-screen-2xl">
-                <h2 class="mb-1 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Add a
-                    Category Information</h2>
-                @livewire('category_create')
-            </div>
-        </section>
-        </x-slot>
-    </x-custom-modal>
-    <x-custom-modal name="product" title="Add a New product">
-        <div>
-            <x-slot:body>
-        </div>
-        <section class="bg-white dark:bg-gray-900">
-            <div class="py-1 lg:py-1 px-4 mx-auto max-w-screen-2xl">
-                <h2 class="mb-1 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Add a
-                    product Information</h2>
-                {{-- @livewire('product_create') --}}
-            </div>
-
-        </section>
-        </x-slot>
-    </x-custom-modal>
-   
-</body>
-
+        @livewireScripts
+    </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\CategoryEdit;
+use App\Livewire\ProductEdit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+Route::get('/category/edit/{id}', CategoryEdit::class)->name('category.edit');
+Route::get('/product/edit/{id}', ProductEdit::class)->name('product.edit');
