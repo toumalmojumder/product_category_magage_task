@@ -10,7 +10,7 @@ class ProductIndex extends Component
     #[On("product_index")]
     public function render()
     {
-        $products=product::get();
+        $products=product::with('categories')->get();
         return view('livewire.product-index',compact('products'));
     }
     public function delete($id)

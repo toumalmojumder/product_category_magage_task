@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\category;
+use App\Models\category_product;
 use App\Models\product;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -26,18 +28,20 @@ class ProductEdit extends Component
         $this->name = $product->name;
         $this->price = $product->price;
         $this->oldImage = $product->image;
+        $this->category_id = category_product::where('product_id',$id)->pluck('category_id')->toArray();
        
     }
 
     #[Layout('layouts.guest')]
     public function render()
     {
-        return view('livewire.product-edit');
+        $categorys = category::get();
+        return view('livewire.product-edit', compact('categorys'));
     }
     public function update(){
         $validated = $this->validate();
         $product = Product::findOrFail($this->id);
-        if($this->banner){
+        if($this->image){
             try {
                 unlink(storage_path('app/public/' . $this->oldImage));                         
                 $validated['image'] = $this->image->store('image','public');
@@ -52,6 +56,15 @@ class ProductEdit extends Component
             'price' => $validated['price'],
             'image' => $validated['image'],
         ]);
+        category_product::where('product_id',$this->id)->delete();
+        if ($this->category_id) {
+            foreach ($this->category_id as $category_id) {
+                category_product::create([
+                    'category_id' => $category_id,
+                    'product_id' => $this->id,
+                ]);
+            }
+        }
         $this->id='';
         $this->oldImage = $validated['image'];
         session()->flash('product_index', 'Product updated successfully.');

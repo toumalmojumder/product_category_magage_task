@@ -841,5 +841,6 @@
             {{ $slot }}
         </div>
         @livewireScripts
+        <script src="{{ asset('multiselect-dropdown.js') }}"></script>
     </body>
 </html>
