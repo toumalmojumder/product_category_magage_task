@@ -854,7 +854,7 @@
           <br>
           <div class="bg-white rounded shadow p-4 w-full ">
             <h6>Product:</h6>
-            @livewire('category_index')
+            @livewire('product_index')
         </div>
           
         </div>
@@ -889,13 +889,13 @@
             <div class="py-1 lg:py-1 px-4 mx-auto max-w-screen-2xl">
                 <h2 class="mb-1 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Add a
                     product Information</h2>
-                {{-- @livewire('product_create') --}}
+                @livewire('product_create')
             </div>
 
         </section>
         </x-slot>
     </x-custom-modal>
-   
+    <script src="{{ asset('multiselect-dropdown.js') }}"></script>
 </body>
 
 </html>

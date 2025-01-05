@@ -19,7 +19,7 @@
                             class="multiselect w-full" x-init="MultiselectDropdown(window.MultiselectDropdownOptions);" placeholder="Select Category"
                             multiselect-search="true" multiselect-select-all="true">
                             @forelse($categorys as $category)
-                                <option value="{{ $category->name }}">
+                                <option value="{{ $category->id }}">
                                     {{ $category->name }}
                                 </option>
                             @empty
@@ -32,123 +32,24 @@
                         @enderror
                     </div>
 
-                    <div class="col-span-6 sm:col-span-6 lg:col-span-6">
-                        <label for="product_code" class="block text-sm font-medium text-gray-700">Product Code:<span
+            
+                    <div class="col-span-3 sm:col-span-3 lg:col-span-3">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Product Title:<span
                                 class="text-red-500">*</span>
                         </label>
-                        <input wire:model.blur="product_code" type="text" id="product_code" placeholder="product Code..."
+                        <input wire:model.blur="name" type="text" id="name" placeholder="product Name..."
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                         <div class="text-red-500">
-                            @error('product_code')
+                            @error('name')
                                 {{ $message }}
                             @enderror
                         </div>
                     </div>
-
-                    <div class="col-span-3 sm:col-span-3 lg:col-span-3">
-                        <label for="title_en" class="block text-sm font-medium text-gray-700">Product Title:(EN)<span
-                                class="text-red-500">*</span>
-                        </label>
-                        <input wire:model.blur="title_en" type="text" id="title_en" placeholder="product Name..."
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                        <div class="text-red-500">
-                            @error('title_en')
-                                {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-span-3 sm:col-span-3 lg:col-span-3">
-                        <label for="title_bn" class="block text-sm font-medium text-gray-700">Product Title:(BN)<span
-                                class="text-red-500">*</span></label>
-                        <input wire:model.blur="title_bn" type="text" id="title_bn" placeholder="খাবারের নাম..."
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                        <div class="text-red-500">
-                            @error('title_bn')
-                                {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                    <div wire:ignore class="col-span-3 sm:col-span-3 lg:col-span-3">
-                        <label for="desc_en" class="block text-sm font-medium text-gray-700">Product
-                            Description:(EN)<span class="text-red-500">*</span>
-                        </label>
-                        <div>
-                            <textarea wire:model="desc_en" id="desc_en" rows="3" cols="38" placeholder="Product Description..."></textarea>
-                        </div>
-                        <div class="text-red-500">
-                            @error('desc_en')
-                                {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                    <div wire:ignore class="col-span-3 sm:col-span-3 lg:col-span-3">
-                        <label for="desc_bn" class="block text-sm font-medium text-gray-700">Product
-                            Description:(BN)<span class="text-red-500">*</span>
-                        </label>
-                        <div>
-                            {{-- <textarea wire:model="desc_bn" id="desc_bn" rows="3" cols="38" placeholder="খাবারের আনুসাঙ্গির বর্ননা"></textarea> --}}
-                            <textarea wire:model="desc_bn" id="desc_bn"></textarea>
-                        </div>
-
-                        <div class="text-red-500">
-                            @error('desc_bn')
-                                {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
-                    @push('scripts')
-                        <script src="{{ asset('asset/ck_editor/ckeditor/ckeditor.js') }}"></script>
-                        <script src="{{ asset('asset/ck_editor/ckeditor/samples/js/sample.js') }}"></script>
-                        <script>
-                            CKEDITOR.replace('desc_bn')
-                            CKEDITOR.replace('desc_en')
-                        </script>
-
-                        <script>
-                            var editor1 = CKEDITOR.instances['desc_bn'];
-                            var editor2 = CKEDITOR.instances['desc_en'];
-                            editor1.on('change', function() {
-                                const value = editor1.getData();
-                                @this.set('desc_bn', value);
-                            });
-                            editor2.on('change', function() {
-                                const value2 = editor2.getData();
-                                @this.set('desc_en', value2);
-                            });
-                        </script>
-                    @endpush
+                    
+                    
 
 
-                    <div wire:ignore class="col-span-6 sm:col-span-6 lg:col-span-6">
-                        <label for="image" class="block text-sm font-medium text-gray-700 text-left"> Image: <span
-                                class="text-green-500">&nbsp; &nbsp; &nbsp; &nbsp; ***Image size must be 500*500 & under
-                                1mb & group maximum 2mb*** </span></label>
-                        <input type="file" id="image" name="image" class="filepond" multiple credits="false"  data-max-files="10"
-                            x-init="const inputElement = document.querySelector('#image');
-                            const pond = FilePond.create(inputElement, {
-                                maxFileSize: '1MB',
-                                maxTotalFileSize: '2MB',
-                            });" />
-                    </div>
-                    @push('scripts')
-                        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-                        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-                        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-                        <script>
-                            FilePond.registerPlugin(FilePondPluginFileValidateSize);
-                            FilePond.registerPlugin(FilePondPluginImagePreview);
-                            FilePond.setOptions({
-                                server: {
-                                    process: '/admin/generalsettings/temporary/image/upload',
-                                    revert: '/admin/generalsettings/temporary/image/delete',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    },
-                                },
-                            });
-                        </script>
-
-                    @endpush
+                    
                     <div class="col-span-3 sm:col-span-3 lg:col-span-3">
                         <label for="price" class="block text-sm font-medium text-gray-700">Product Price:(৳)<span
                                 class="text-red-500">*</span>
@@ -163,51 +64,26 @@
                                 {{ $message }}
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-span-3 sm:col-span-3 lg:col-span-3">
-                        <label for="discount" class="block text-sm font-medium text-gray-700">Discount:(%)</label>
-                        <input wire:model.blur="discount" type="number" id="discount"
-                            placeholder="Discount(মূল্য ছাড়) %" oninput="validity.valid||(value='0');" min="0"
-                            max="100"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                        <span class="text-gray-400 text-xs">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Integer( পূর্ণ সংখ্যা
-                            )</span>
-                        <div class="text-red-500">
-                            @error('discount')
-                                {{ $message }}
+                        <div class="col-span-6 sm:col-span-6">
+                            <label for="image" class="block text-sm font-medium text-gray-700 text-left">
+                                Image: <span class="text-green-500">&nbsp; &nbsp;***Image size must be
+                                    1400px X 550px & under
+                                    1mb***</span></label>
+                            <input wire:model.blur="image" accept="image/png, image/jpeg, image/webp" type="file"
+                                name="image" id="image"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                            @error('image')
+                                <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
+    
                         </div>
-                    </div>
-
-                    <div class="col-span-6 inline-flex justify-around">
-                        <label>
-                            <input wire:model="selectedSpecials" type="checkbox" name="special[]" value="bestseller" class="form-checkbox h-10 w-10 text-indigo-600">
-                            Best Sells
-                        </label>
-                        <label>
-                            <input wire:model="selectedSpecials" type="checkbox" name="special[]" value="topbrand" class="form-checkbox h-10 w-10 text-indigo-600">
-                            Top Brand
-                        </label>
-                        <label>
-                            <input wire:model="selectedSpecials" type="checkbox" name="special[]" value="newarrival" class="form-checkbox h-10 w-10 text-indigo-600">
-                            New Arrival
-                        </label>
-                    </div>
-                    <div class="col-span-6 sm:col-span-3">
-                        <label for="status" class="block text-sm font-medium text-gray-700 text-left">Status</label>
-                        <div class="mt-1 text-left">
-                            <label class="inline-flex items-center">
-                                <input wire:model="status" type="checkbox" id="status" value="1"
-                                    class="form-checkbox h-10 w-10 text-indigo-600">
-                                <span class="ml-2 text-gray-700">Active</span>
-                            </label>
+                        <div class="col-span-6 sm:col-span-6 w-[100px]">
+                            @if ($image)
+                                <img class="rounded mt-5 block h-20 w-full" src="{{ $image->temporaryUrl() }}"
+                                    alt="User Avatar">
+                            @endif
                         </div>
-                        <div class="text-red-500">
-                            @error('status')
-                                {{ $message }}
-                            @enderror
-                        </div>
-                    </div>
+                    </div>             
                 </div>
             </div>
         </div>
